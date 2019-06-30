@@ -7,39 +7,67 @@ a {
   color: #00B7FF;
 }
 
-#content {
-  width: 800px;
+h1, h3 {
+  margin-bottom: 0;
+}
+
+#content{
+  width: 960px;
   margin-left: auto;
   margin-right: auto;
+  color: #fb5;
+  background-color: #334;
+}
+
+#header{
+  width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+  color: #fb5;
+  background-color: #900;
 }
 
 #room {
-  background-color: #ddd;
-  margin-bottom: 1em;
+  width: 780px;
+  height: 1.5em;
+  overflow: auto;
+  color: #223;
+  background-color: #DDD;
+  border-color: #667;
+  margin-right: 10px;
+  font-weight: bold;
 }
 
 #messages {
-  width: 690px;
+  width: 780px;
   height: 300px;
   overflow: auto;
-  background-color: #eee;
+  color: #223;
+  background-color: #DDD;
+  border-color: #667;
   margin-bottom: 1em;
   margin-right: 10px;
 }
 
-#room-list {
+#show-room-list {
   float: right;
-  width: 100px;
+  width: 160px;
   height: 300px;
   overflow: auto;
 }
 
-#room-list div {
+#show-room-list div {
   border-bottom: 1px solid #eee;
+  text-align: center;
+  color: #00F;
 }
 
-#room-list div:hover {
+#show-room-list div:hover {
   background-color: #ddd;
+}
+
+#room-list {
+  color: 0000FF;
 }
 
 #send-message {
@@ -48,6 +76,19 @@ a {
   margin-right: 1em;
 }
 
-#help {
+#command-help {
   font: 10px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+#help {
+  width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+  border-bottom: 1px solid #334;
+  border-left: 1px solid #334;
+  border-right: 1px solid #334;
+}
+
+#help h3 {
+  margin-top: 0;
 }

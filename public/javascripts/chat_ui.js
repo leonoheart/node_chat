@@ -2,23 +2,35 @@ function divEscapedContentElement(message) {
   return $('<div></div>').text(message);
 }
 
-function divSystemContentElement(message) {
-  return $('<div></div>').html('<i>' + message + '</i>');
+function divSystemContentElement() {
+  return $('<div></div>').html('<i>Unrecognized command.</i>');
 }
 
 function processUserInput(chatApp, socket) {
   var message = $('#send-message').val();
-  var systemMessage;
+  var messageFlg = chatApp.processCommand(message);
 
-  if (message.charAt(0) == '/') {
-    systemMessage = chatApp.processCommand(message);
-    if (systemMessage) {
-      $('#messages').append(divSystemContentElement(systemMessage));
-    }
-  } else {
-    chatApp.sendMessage($('#room').text(), message);
-    $('#messages').append(divEscapedContentElement(message));
-    $('#messages').scrollTop($('#messages').prop('scrollHeight'));
+  switch(messageFlg){
+    case 3:
+      $('#messages').append(divSystemContentElement());
+      break;
+    case 1:
+      break;
+    case 2:
+      var words = message.split('');
+      words.shift();
+      var guest = words[0];
+      words.shift();
+      var text = words.join(' ');
+      chatApp.atSomebody($('#room').text(), guest, text);
+      $('#messages').append(divEscapedContentElement(guestMessage));
+      $('#messages').scrollTop($('#messages').prop('scrollHeight'));
+      break;
+    case 0:
+      chatApp.sendMessage($('#room').text(), message);
+      $('#messages').append(divEscapedContentElement(message));
+      $('#messages').scrollTop($('#messages').prop('scrollHeight'));
+      break;
   }
 
   $('#send-message').val('');

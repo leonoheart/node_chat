@@ -7,24 +7,41 @@
 </head>
 
 <body>
-<div id='content'>
-  <div id='room'></div>
-  <div id='room-list'></div>
-  <div id='messages'></div>
-
-  <form id='send-form'>
-    <input id='send-message' />
-    <input id='send-button' type='submit' value='Send'/>
-
-    <div id='help'>
-      Chat commands:
-      <ul>
-        <li>Change nickname: <code>/nick [username]</code></li>
-        <li>Join/create room: <code>/join [room name]</code></li>
-      </ul>
+  <div id='header'><h1>Welcome to our chat room!</h1></div>
+  <div id='content'>
+    <div id='room'></div>
+    <div id="show-room-list">
+      <h3>choose a chat:<br></h3>
+      <div id='room-list'></div>
     </div>
-  </form>
-</div>
+    <div id='messages'></div>
+
+    <form id='send-form'>
+      <input id='send-message' />
+      <input id='send-button' type='submit' value='Send'/>
+      
+      <div id='command-help'>
+        <button onclick="help()">command help</button>
+        <script>
+          function help(){
+            var myWindow = window.open("", "_blank", "width=400px, height=100px");
+            myWindow.document.write("<ul><li>Change nickname: <code>/nick [username]</code></li><li>Join/create room: <code>/join [room name]</code></li><li>Send message to somebody:<code>/at [guest name]</code></li></ul>");
+            
+          }
+        </script>
+      </div>
+    </form>
+  </div>
+  <div id = "help">
+      <h3>Introduction to the chat room</h3>
+      <p>
+        (1) When you first enter the chat app, you are in the room "Lobby" by default.<br>
+        (2) try to send messages to other chatters in the same room.<br>
+        (3) click on whichever room name on the right bar, you can change the room you are in.<br>
+        (4) Enter the command as the command help tells you, you can change your guset name or create a new room as you like.<br>
+      </p>
+  </div>
+
 
 <script src='/socket.io/socket.io.js' type='text/javascript'></script>
 <script src='http://code.jquery.com/jquery-1.8.0.min.js' type='text/javascript'></script>
