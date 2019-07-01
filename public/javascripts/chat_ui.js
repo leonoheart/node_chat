@@ -2,36 +2,37 @@ function divEscapedContentElement(message) {
   return $('<div></div>').text(message);
 }
 
-function divSystemContentElement() {
-  return $('<div></div>').html('<i>Unrecognized command.</i>');
+function divSystemContentElement(message) {
+  return $('<div></div>').html('<i>' + message + '</i>');
 }
 
 function processUserInput(chatApp, socket) {
   var message = $('#send-message').val();
-  var messageFlg = chatApp.processCommand(message);
 
-  switch(messageFlg){
-    case 3:
-      $('#messages').append(divSystemContentElement());
-      break;
-    case 1:
-      break;
-    case 2:
-      var words = message.split('');
-      words.shift();
-      var guest = words[0];
-      words.shift();
-      var text = words.join(' ');
-      chatApp.atSomebody($('#room').text(), guest, text);
-      $('#messages').append(divEscapedContentElement(guestMessage));
-      $('#messages').scrollTop($('#messages').prop('scrollHeight'));
-      break;
-    case 0:
-      chatApp.sendMessage($('#room').text(), message);
-      $('#messages').append(divEscapedContentElement(message));
-      $('#messages').scrollTop($('#messages').prop('scrollHeight'));
-      break;
-  }
+  if (message.charAt(0) == '/') {
+    var messageFlg = chatApp.processCommand(message);
+    switch(messageFlg){
+      case 1:
+        var words = message.split(' ');
+        words.shift();
+        var guest = words[0];
+        words.shift();
+        var text = words.join(' ');
+        chatApp.atSomebody($('#room').text(), guest, text);
+        $('#messages').append(divEscapedContentElement(text));
+        $('#messages').scrollTop($('#messages').prop('scrollHeight'));
+        break;
+      case 0:
+        break;
+      default:
+        $('#messages').append(divSystemContentElement(messageFlg));
+        break;
+    }
+  }else {
+    chatApp.sendMessage($('#room').text(), message);
+    $('#messages').append(divEscapedContentElement(message));
+    $('#messages').scrollTop($('#messages').prop('scrollHeight'));
+  }  
 
   $('#send-message').val('');
 }
@@ -59,6 +60,11 @@ $(document).ready(function() {
 
   socket.on('message', function (message) {
     var newElement = $('<div></div>').text(message.text);
+    $('#messages').append(newElement);
+  });
+
+  socket.on('atMessage', function (atMessage) {
+    var newElement = $('<div></div>').text(atMessage.text);
     $('#messages').append(newElement);
   });
 

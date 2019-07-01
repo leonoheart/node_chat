@@ -16,10 +16,11 @@ Chat.prototype.changeRoom = function(room) {
   });
 };
 
+
 Chat.prototype.atSomebody = function(room, guest, text) {
   var guestMessage = {
     room: room,
-    guest: room,
+    guest: guest,
     text: text
   };
   this.socket.emit('guestMessage', guestMessage);
@@ -37,22 +38,19 @@ Chat.prototype.processCommand = function(command) {
       words.shift();
       var room = words.join(' ');
       this.changeRoom(room);
-      messageFlg = 1;
       break;
     case 'nick':
       words.shift();
       var name = words.join(' ');
       this.socket.emit('nameAttempt', name);
-      messageFlg = 1;
       break;
     case 'at':
-      messageFlg = 2;
+      messageFlg = 1;
       break;
     default:
-      message = 'Unrecognized command.';
-      messageFlg = 3;
+       messageFlg =  "Unrecognized command."
       break;
   };
 
-  return message;
+  return messageFlg;
 };
