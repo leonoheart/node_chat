@@ -63,8 +63,8 @@ $(document).ready(function() {
     $('#messages').append(newElement);
   });
 
-  socket.on('atMessage', function (atMessage) {
-    var newElement = $('<div></div>').text(atMessage.text);
+  socket.on('guestMessage', function (guestMessage) {
+    var newElement = $('<div></div>').text(guestMessage.text);
     $('#messages').append(newElement);
   });
 
